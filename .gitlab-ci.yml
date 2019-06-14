@@ -17,3 +17,21 @@
 #    License along with this library; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #    MA 02111-1307  USA
+
+
+before_script:
+  - docker info
+#  - docker login -u $DOCKER_REGISTRY_USER_LOGIN -p $CI_REGISTRY_PASS_LOGIN $CI_REGISTRY
+
+stages:
+  - build_01
+#  - build_02
+#  - test
+
+build_docker_daliuge:
+  stage: build_01
+  tags:
+    - docker-executor
+  script:
+    - cd DALiuGE
+    - docker build .
