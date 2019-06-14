@@ -18,7 +18,6 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #    MA 02111-1307  USA
 
-#FROM debian:stretch-slim as buildenv
 FROM python:3.7 as buildenv
 
 RUN apt update
