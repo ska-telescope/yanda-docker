@@ -18,8 +18,12 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #    MA 02111-1307  USA
 
+ARG DOCKER_REGISTRY_USER
+ARG DOCKER_REGISTRY_HOST
+#FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge:latest as buildenv
+
+FROM yanda-daliuge:latest as buildenv
 ARG COMPILE_JOBS=4
-FROM debian:stretch-slim as buildenv
 
 RUN apt update
 
@@ -47,9 +51,6 @@ RUN apt install -y \
     python-numpy \
     wcslib-dev
 
-# Needed for spead2
-RUN apt install -y python3-pip
-
 #############################################################
 # Build casacore
 WORKDIR /home
@@ -57,7 +58,7 @@ RUN git clone https://bitbucket.csiro.au/scm/askapsdp/yandasoft.git
 
 # Casacore need these, but they aren't installed by default
 WORKDIR /home/yandasoft
-RUN ./build_all.sh -s ubuntu -c -j "${COMPILE_JOBS}"
+RUN ./build_all.sh -s ubuntu -c -j $COMPILE_JOBS
 
 #############################################################
 # Build OSKAR
@@ -66,7 +67,7 @@ RUN git clone https://github.com/OxfordSKA/OSKAR.git
 
 WORKDIR /home/OSKAR
 RUN cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc .
-RUN make -j"${COMPILE_JOBS}"
+RUN make -j$COMPILE_JOBS
 RUN make install
 
 #############################################################
@@ -76,6 +77,5 @@ RUN pip3 install --install-option="--prefix=/usr/local" spead2
 
 ##############################################################
 # Create a new image based on only the executable parts of the old image
-FROM debian:stretch-slim
+FROM yanda-daliuge:latest
 COPY --from=buildenv /usr/local /usr/local
-
