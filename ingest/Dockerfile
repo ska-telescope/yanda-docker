@@ -77,5 +77,6 @@ RUN pip3 install --install-option="--prefix=/usr/local" spead2
 
 ##############################################################
 # Create a new image based on only the executable parts of the old image
-FROM yanda-daliuge:latest
+FROM debian:stretch-slim
 COPY --from=buildenv /usr/local /usr/local
+RUN ldconfig
