@@ -20,9 +20,8 @@
 
 ARG DOCKER_REGISTRY_USER
 ARG DOCKER_REGISTRY_HOST
-#FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge:latest as buildenv
+FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge:latest as buildenv
 
-FROM yanda-daliuge:latest as buildenv
 ARG COMPILE_JOBS=4
 
 RUN apt update
