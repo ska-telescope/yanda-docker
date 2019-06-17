@@ -69,5 +69,9 @@ build_docker_ingest:
     - docker-executor
   script:
     - cd ingest
-    - docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_USER --build-arg DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST.
+    - >
+      docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_USER
+      --build-arg DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST
+      .
     - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest:latest
