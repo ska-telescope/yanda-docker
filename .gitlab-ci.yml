@@ -50,7 +50,7 @@ before_script:
 stages:
   - build_01
   - build_02
-#  - test
+  - test
 
 build_docker_daliuge:
   retry: 2
@@ -75,3 +75,21 @@ build_docker_ingest:
       --build-arg DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST
       .
     - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest:latest
+
+test_docker_daliuge:
+  stage: test
+  script:
+    - docker pull -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
+    - >
+      docker run -d --rm --name daliuge-test
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
+      dlg help
+
+test_docker_ingest:
+  stage: test
+  script:
+    - docker pull -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+    - >
+      docker run -d --rm --name daliuge-test
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
+      dlg help
