@@ -71,7 +71,11 @@ build_docker_daliuge:
     - docker-executor
   script:
     - cd DALiuGE
-    - docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge .
+    - >
+      docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
+      --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_USER
+      --build-arg DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST
+      .
     - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge:latest
 
 build_docker_ingest:
