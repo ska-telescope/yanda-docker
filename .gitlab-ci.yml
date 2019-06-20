@@ -50,11 +50,23 @@ before_script:
 stages:
   - build_01
   - build_02
-  - test
+  - build_03
+  - test_01
+  - test_02
+
+build_docker_yanda_base:
+  retry: 2
+  stage: build_01
+  tags:
+    - docker-executor
+  script:
+    - cd yanda_base
+    - docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-base .
+    - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-base:latest
 
 build_docker_daliuge:
   retry: 2
-  stage: build_01
+  stage: build_02
   tags:
     - docker-executor
   script:
@@ -64,7 +76,7 @@ build_docker_daliuge:
 
 build_docker_ingest:
   retry: 2
-  stage: build_02
+  stage: build_03
   tags:
     - docker-executor
   script:
@@ -77,7 +89,7 @@ build_docker_ingest:
     - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest:latest
 
 test_docker_daliuge:
-  stage: test
+  stage: test_01
   script:
     - docker pull -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
     - >
@@ -86,7 +98,7 @@ test_docker_daliuge:
       dlg help
 
 test_docker_ingest:
-  stage: test
+  stage: test_02
   script:
     - docker pull -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
     - >
