@@ -30,7 +30,7 @@ RUN pip3 install --install-option="--prefix=/usr/local" daliuge
 # Create a new image based on only the executable parts of the old image
 ARG DOCKER_REGISTRY_USER
 ARG DOCKER_REGISTRY_HOST
-FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-base:latest as buildenv
+FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-base:latest
 COPY --from=buildenv /usr/local /usr/local
 RUN apt update
 RUN apt-get install -y --no-install-recommends libc6 libffi6 libssl1.1 ca-certificates netbase libexpat1
