@@ -95,17 +95,17 @@ build_docker_ingest:
 test_docker_daliuge:
   stage: test_01
   script:
-    - docker pull -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
+    - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
     - >
-      docker run -d --rm --name daliuge-test
+      docker run -it --rm --name daliuge-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
       dlg help
 
 test_docker_ingest:
   stage: test_02
   script:
-    - docker pull -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+    - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
     - >
-      docker run -d --rm --name daliuge-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
+      docker run -it --rm --name daliuge-test
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
       dlg help
