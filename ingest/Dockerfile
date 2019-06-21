@@ -76,8 +76,6 @@ RUN pip3 install --install-option="--prefix=/usr/local" spead2
 
 ##############################################################
 # Create a new image based on only the executable parts of the old image
-ARG DOCKER_REGISTRY_USER
-ARG DOCKER_REGISTRY_HOST
 FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-base:latest
 COPY --from=buildenv /usr/local /usr/local
 RUN ldconfig
