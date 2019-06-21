@@ -97,7 +97,7 @@ test_docker_daliuge:
   script:
     - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
     - >
-      docker run -it --rm --name daliuge-test
+      docker run -d --rm --name daliuge-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
       dlg help
 
@@ -106,6 +106,6 @@ test_docker_ingest:
   script:
     - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
     - >
-      docker run -it --rm --name daliuge-test
+      docker run -d --rm --name daliuge-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
       dlg help
