@@ -20,6 +20,7 @@
 
 ARG DOCKER_REGISTRY_USER
 ARG DOCKER_REGISTRY_HOST
+
 FROM python:3.7-slim-stretch as buildenv
 
 RUN apt update
