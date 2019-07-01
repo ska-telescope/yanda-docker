@@ -77,5 +77,11 @@ RUN pip3 install --install-option="--prefix=/usr/local" spead2
 ##############################################################
 # Create a new image based on only the executable parts of the old image
 FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-base:latest
+RUN apt install -y --no-install-recommends \
+    libopenblas-base \
+    libcfitsio-bin \
+    libwcs5 \
+    libgomp1 \
+    libboost-system1.62.0
 COPY --from=buildenv /usr/local /usr/local
 RUN ldconfig
