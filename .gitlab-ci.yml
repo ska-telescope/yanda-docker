@@ -108,76 +108,76 @@ test_docker_ingest:
 
     # Test Daliuge
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
       dlg help
 
     # Test Casacore
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
       taql --help
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      readms --help
+      readms --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      writems --help
+      writems --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      fits2table --help
+      fits2table --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      image2fits --help
+      image2fits --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      imagecalc --help
+      imagecalc --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      imageregrid --help
+      imageregrid --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      ms2uvfits --help
+      ms2uvfits --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      msselect --help
+      msselect --help || exit 0
 
     # Test OSKAR
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      oskar_binary_file_query --help
+      oskar_binary_file_query --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      oskar_convert_ecef_to_enu --help
+      oskar_convert_ecef_to_enu --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      oskar_fits_image_to_sky_model --help
+      oskar_fits_image_to_sky_model --help || exit 0
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      oskar_vis_to_ms --help
+      oskar_vis_to_ms --help || exit 0
 
     # Test spead2
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
       spead2_bench.py --help
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
       spead2_recv.py --help
     - >
-      docker run -t --rm --name daliuge-test
+      docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
       spead2_send.py --help
