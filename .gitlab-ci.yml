@@ -120,53 +120,53 @@ test_docker_ingest:
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      readms --help || exit 0
+      readms --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      writems --help || exit 0
+      writems --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      fits2table --help || exit 0
+      fits2table --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      image2fits --help || exit 0
+      image2fits --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      imagecalc --help || exit 0
+      imagecalc --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      imageregrid --help || exit 0
+      imageregrid --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      ms2uvfits --help || exit 0
+      ms2uvfits --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      msselect --help || exit 0
+      msselect --help || true
 
     # Test OSKAR
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      oskar_binary_file_query --help || exit 0
+      oskar_binary_file_query --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      oskar_convert_ecef_to_enu --help || exit 0
+      oskar_convert_ecef_to_enu --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      oskar_fits_image_to_sky_model --help || exit 0
+      oskar_fits_image_to_sky_model --help || true
     - >
       docker run -t --rm --name ingest-test
       $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      oskar_vis_to_ms --help || exit 0
+      oskar_vis_to_ms --help || true
 
     # Test spead2
     - >
