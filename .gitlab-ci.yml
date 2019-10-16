@@ -44,7 +44,7 @@ services:
   - docker:dind
 
 before_script:
-  - docker login -u $DOCKER_REGISTRY_USER_LOGIN -p $CI_REGISTRY_PASS_LOGIN $CI_REGISTRY
+  - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_HOST
   - docker info
 
 stages:
@@ -61,8 +61,8 @@ build_docker_yanda_base:
     - docker-executor
   script:
     - cd yanda_base
-    - docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-base .
-    - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-base:latest
+    - docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-base .
+    - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-base:latest
 
 build_docker_daliuge:
   retry: 2
@@ -72,11 +72,11 @@ build_docker_daliuge:
   script:
     - cd DALiuGE
     - >
-      docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
-      --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_USER
+      docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-daliuge
+      --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_FOLDER
       --build-arg DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST
       .
-    - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge:latest
+    - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-daliuge:latest
 
 build_docker_ingest:
   retry: 2
@@ -86,98 +86,98 @@ build_docker_ingest:
   script:
     - cd ingest
     - >
-      docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
-      --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_USER
+      docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
+      --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_FOLDER
       --build-arg DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST
       .
-    - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest:latest
+    - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest:latest
 
 test_docker_daliuge:
   stage: test_01
   script:
-    - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
+    - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-daliuge
     - >
       docker run -t --rm --name daliuge-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-daliuge
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-daliuge
       dlg help
 
 test_docker_ingest:
   stage: test_02
   script:
-    - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+    - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
 
     # Test Daliuge
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       dlg help
 
     # Test Casacore
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       taql --help
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       readms --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       writems --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       fits2table --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       image2fits --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       imagecalc --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       imageregrid --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       ms2uvfits --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       msselect --help || true
 
     # Test OSKAR
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       oskar_binary_file_query --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       oskar_convert_ecef_to_enu --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       oskar_fits_image_to_sky_model --help || true
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       oskar_vis_to_ms --help || true
 
     # Test spead2
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       spead2_bench.py --help
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       spead2_recv.py --help
     - >
       docker run -t --rm --name ingest-test
-      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_USER/yanda-ingest
+      $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
       spead2_send.py --help

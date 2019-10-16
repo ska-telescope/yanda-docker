@@ -38,7 +38,7 @@ RUN apt update
 
 RUN apt-get install -y --no-install-recommends libc6-dev libffi-dev libssl-dev make g++
 
-RUN pip3 install --install-option="--prefix=/usr/local" daliuge
+RUN pip3 install daliuge
 
 ##############################################################
 # Create a new image based on only the executable parts of the old image
