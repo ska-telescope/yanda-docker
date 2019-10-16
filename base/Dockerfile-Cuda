@@ -29,19 +29,8 @@
 ##
 ##############################################################
 
-ARG DOCKER_REGISTRY_USER
-ARG DOCKER_REGISTRY_HOST
-
-FROM python:3.7-slim-stretch as buildenv
-
-RUN apt update
-
-RUN apt-get install -y --no-install-recommends libc6-dev libffi-dev libssl-dev make g++
-
-RUN pip3 install --install-option="--prefix=/usr/local" daliuge
-
 ##############################################################
-# Create a new image based on only the executable parts of the old image
-FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-base:latest
-COPY --from=buildenv /usr/local /usr/local
-RUN ldconfig
+# Create an image with the extra packages Yanda needs
+FROM nvidia/cuda:10.1-runtime
+RUN apt update && \
+    apt-get install -y --no-install-recommends libc6 libffi6 libssl1.1 ca-certificates netbase libexpat1

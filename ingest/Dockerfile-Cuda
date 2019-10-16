@@ -20,9 +20,9 @@
 
 ARG DOCKER_REGISTRY_USER
 ARG DOCKER_REGISTRY_HOST
-FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge:latest as buildenv
+FROM nvidia/cuda:10.1-devel as buildenv
 
-ARG COMPILE_JOBS=2
+ARG COMPILE_JOBS=4
 
 RUN apt update
 
@@ -69,14 +69,9 @@ RUN cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc .
 RUN make -j$COMPILE_JOBS
 RUN make install
 
-#############################################################
-# Add the SPEAD2 into the default python env making sure the
-# code is installed in /usr/local/lib/python3
-RUN pip3 install --install-option="--prefix=/usr/local" spead2
-
 ##############################################################
 # Create a new image based on only the executable parts of the old image
-FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge:latest
+FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge-cuda:latest
 RUN apt install -y --no-install-recommends \
     libopenblas-base \
     libcfitsio-bin \
@@ -85,3 +80,8 @@ RUN apt install -y --no-install-recommends \
     libboost-system1.62.0
 COPY --from=buildenv /usr/local /usr/local
 RUN ldconfig
+
+#############################################################
+# Add the SPEAD2 into the default python env making sure the
+# code is installed in /usr/local/lib/python3
+RUN pip3 install --install-option="--prefix=/usr/local" spead2
