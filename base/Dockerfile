@@ -32,5 +32,12 @@
 ##############################################################
 # Create an image with the extra packages Yanda needs
 FROM debian:stretch-slim
-RUN apt update && \
-    apt-get install -y --no-install-recommends libc6 libffi6 libssl1.1 ca-certificates netbase libexpat1
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+        libc6 \
+        libffi6 \
+        libssl1.1 \
+        ca-certificates \
+        netbase \
+        libexpat1

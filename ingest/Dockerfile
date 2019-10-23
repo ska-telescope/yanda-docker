@@ -24,10 +24,10 @@ FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge:latest as bui
 
 ARG COMPILE_JOBS=2
 
-RUN apt update
+RUN apt-get update
 
 # Needed for building casacore & oskar
-RUN apt install -y \
+RUN apt-get install -y \
     git \
     cmake \
     flex \
@@ -38,7 +38,7 @@ RUN apt install -y \
     make
 
 # Needed for casacore
-RUN apt install -y \
+RUN apt-get install -y \
     libboost-dev \
     libboost-all-dev \
     libcfitsio-dev \
@@ -72,16 +72,21 @@ RUN make install
 #############################################################
 # Add the SPEAD2 into the default python env making sure the
 # code is installed in /usr/local/lib/python3
-RUN pip3 install --install-option="--prefix=/usr/local" spead2
+RUN pip3 install spead2
 
 ##############################################################
 # Create a new image based on only the executable parts of the old image
 FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge:latest
-RUN apt install -y --no-install-recommends \
-    libopenblas-base \
-    libcfitsio-bin \
-    libwcs5 \
-    libgomp1 \
-    libboost-system1.62.0
+RUN apt-get install -y \
+    libboost-dev \
+    libboost-all-dev \
+    libcfitsio-dev \
+    libfftw3-dev \
+    libgsl-dev \
+    libopenblas-dev \
+    libopenmpi-dev \
+    libpython-dev \
+    python-numpy \
+    wcslib-dev
 COPY --from=buildenv /usr/local /usr/local
 RUN ldconfig

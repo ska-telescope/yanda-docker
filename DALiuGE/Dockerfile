@@ -34,10 +34,15 @@ ARG DOCKER_REGISTRY_HOST
 
 FROM python:3.7-slim-stretch as buildenv
 
-RUN apt update
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
+        libc6-dev \
+        libffi-dev \
+        libssl-dev \
+        make \
+        g++
 
-RUN apt-get install -y --no-install-recommends libc6-dev libffi-dev libssl-dev make g++
-
+RUN pip3 install --upgrade pip
 RUN pip3 install daliuge
 
 ##############################################################
