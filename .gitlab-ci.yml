@@ -38,7 +38,7 @@ build_docker_yanda_base:
   tags:
     - docker-executor
   script:
-    - cd yanda_base
+    - cd base
     - docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-base .
     - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-base:latest
 
