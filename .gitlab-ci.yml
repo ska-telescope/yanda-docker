@@ -86,6 +86,8 @@ build_docker_yandasoft_daliuge:
 
 test_docker_daliuge:
   stage: test_01
+  tags:
+    - docker-executor
   script:
     - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-daliuge
     - >
@@ -95,6 +97,8 @@ test_docker_daliuge:
 
 test_docker_ingest:
   stage: test_02
+  tags:
+    - docker-executor
   script:
     - docker pull $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest
 
