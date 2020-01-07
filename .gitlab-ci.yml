@@ -92,6 +92,20 @@ build_docker_ingest:
       .
     - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yanda-ingest:latest
 
+build_docker_yandasoft_daliuge:
+  retry: 2
+  stage: build_03
+  tags:
+    - docker-executor
+  script:
+    - cd yandasoft
+    - >
+      docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yandasoft
+      --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_FOLDER
+      --build-arg DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST
+      .
+    - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yandasoft:latest
+
 test_docker_daliuge:
   stage: test_01
   script:
