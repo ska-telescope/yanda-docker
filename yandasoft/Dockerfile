@@ -64,6 +64,17 @@ RUN ./build_all.sh -s ubuntu -c -r -j $COMPILE_JOBS
 RUN ./build_all.sh -s ubuntu -a -j $COMPILE_JOBS
 RUN ./build_all.sh -s ubuntu -y -j $COMPILE_JOBS
 
+#############################################################
+# Install casacore data
+RUN mkdir /usr/local/share/casacore
+RUN mkdir /usr/local/share/casacore/data
+WORKDIR /usr/local/share/casacore/data
+RUN wget ftp://ftp.astron.nl/outgoing/Measures/WSRT_Measures.ztar
+RUN mv WSRT_Measures.ztar WSRT_Measures.tar.gz
+RUN gunzip WSRT_Measures.tar.gz
+RUN tar -xvf WSRT_Measures.tar
+RUN rm WSRT_Measures.tar
+
 ##############################################################
 # Create a new image based on only the executable parts of the old image
 FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge:latest
