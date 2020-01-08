@@ -37,7 +37,8 @@ RUN apt-get install -y \
     g++ \
     make \
     patch \
-    subversion
+    subversion \
+    wget
 
 # Casacore/yandasoft dependencies
 RUN apt-get install -y \
