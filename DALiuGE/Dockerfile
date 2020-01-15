@@ -29,8 +29,11 @@
 ##
 ##############################################################
 
+# DUMMY_ARG is used to force re-running 'pip3 install daliuge'
+# when needed
 ARG DOCKER_REGISTRY_USER
 ARG DOCKER_REGISTRY_HOST
+ARG DUMMY_ARG
 
 FROM python:3.7-slim-stretch as buildenv
 
@@ -43,7 +46,7 @@ RUN apt-get install -y --no-install-recommends \
         g++
 
 RUN pip3 install --upgrade pip
-RUN pip3 install daliuge
+RUN DUMMY_ARG=${DUMMY_ARG} pip3 install daliuge
 
 ##############################################################
 # Create a new image based on only the executable parts of the old image
