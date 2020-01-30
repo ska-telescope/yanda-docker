@@ -81,16 +81,16 @@ build_docker_yandasoft_daliuge:
   tags:
     - docker-executor
   script:
+    - tag=latest
+    - if [ "$YANDASOFT_BRANCH" != master ]; then tag=$YANDASOFT_BRANCH; fi
     - cd yandasoft
     - >
-      docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yandasoft
+      docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yandasoft:${tag}
       --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_FOLDER
       --build-arg DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST
       --build-arg YANDASOFT_BRANCH=$YANDASOFT_BRANCH
       $YANDASOFT_BUILD_ARGS
       .
-    - tag=latest
-    - if [ "$YANDASOFT_BRANCH" != master ]; then tag=$YANDASOFT_BRANCH; fi
     - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yandasoft:${tag}
 
 test_docker_daliuge:
