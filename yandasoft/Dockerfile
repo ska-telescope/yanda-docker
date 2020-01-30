@@ -62,7 +62,7 @@ RUN apt-get install -y \
 WORKDIR /home
 RUN git clone https://bitbucket.csiro.au/scm/askapsdp/yandasoft.git
 WORKDIR /home/yandasoft
-RUN ./build_all.sh -s ubuntu -c -r -j $COMPILE_JOBS
+RUN ./build_all.sh -s ubuntu -c -r -j $COMPILE_JOBS -C -DUSE_READLINE=OFF
 WORKDIR /home
 RUN git clone https://github.com/rtobar/all_yandasoft.git
 WORKDIR /home/all_yandasoft
