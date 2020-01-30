@@ -32,7 +32,7 @@
 ARG DOCKER_REGISTRY_USER
 ARG DOCKER_REGISTRY_HOST
 
-FROM python:3.7-slim-stretch as buildenv
+FROM python:3.7-slim-buster as buildenv
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
