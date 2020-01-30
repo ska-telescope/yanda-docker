@@ -21,6 +21,9 @@
 
 image: docker:stable
 
+variables:
+  - YANDASOFT_BRANCH=master
+
 before_script:
   - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_HOST
   - docker info
@@ -83,6 +86,7 @@ build_docker_yandasoft_daliuge:
       docker build -t $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yandasoft
       --build-arg DOCKER_REGISTRY_USER=$DOCKER_REGISTRY_FOLDER
       --build-arg DOCKER_REGISTRY_HOST=$DOCKER_REGISTRY_HOST
+      --build-arg YANDASOFT_BRANCH=$YANDASOFT_BRANCH
       $YANDASOFT_BUILD_ARGS
       .
     - docker push $DOCKER_REGISTRY_HOST/$DOCKER_REGISTRY_FOLDER/yandasoft:latest

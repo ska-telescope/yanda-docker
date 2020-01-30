@@ -23,6 +23,7 @@ ARG DOCKER_REGISTRY_HOST
 FROM ${DOCKER_REGISTRY_HOST}/${DOCKER_REGISTRY_USER}/yanda-daliuge:latest as buildenv
 
 ARG COMPILE_JOBS=2
+ARG YANDASOFT_BRANCH=master
 
 RUN apt-get update
 
@@ -62,8 +63,15 @@ WORKDIR /home
 RUN git clone https://bitbucket.csiro.au/scm/askapsdp/yandasoft.git
 WORKDIR /home/yandasoft
 RUN ./build_all.sh -s ubuntu -c -r -j $COMPILE_JOBS
-RUN ./build_all.sh -s ubuntu -a -j $COMPILE_JOBS
-RUN ./build_all.sh -s ubuntu -y -j $COMPILE_JOBS
+WORKDIR /home
+RUN git clone https://github.com/rtobar/all_yandasoft.git
+WORKDIR /home/all_yandasoft
+RUN ./git-do clone -b $YANDASOFT_BRANCH
+RUN mkdir build
+WORKDIR build
+RUN cmake ..
+RUN cmake --build . -j $COMILE_JOBS
+RUN cmake --build . --target install -j $COMPILE_JOBS
 
 #############################################################
 # Install casacore data
