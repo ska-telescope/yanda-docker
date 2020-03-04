@@ -61,7 +61,7 @@ RUN apt-get install -y \
 # Build casacore, then all yandasoft dependencies, then yandasoft itself
 WORKDIR /home
 RUN git clone https://bitbucket.csiro.au/scm/askapsdp/yandasoft.git
-WORKDIR /home/yandasoft
+WORKDIR /home/yandasoft/deploy/general
 RUN ./build_all.sh -s ubuntu -c -r -j $COMPILE_JOBS -C -DUSE_READLINE=OFF
 WORKDIR /home
 RUN git clone https://github.com/rtobar/all_yandasoft.git
