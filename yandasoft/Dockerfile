@@ -69,7 +69,7 @@ WORKDIR /home/all_yandasoft
 RUN ./git-do clone -b $YANDASOFT_BRANCH
 RUN mkdir build
 WORKDIR build
-RUN cmake ..
+RUN cmake .. -DBUILD_ANALYSIS=OFF -DBUILD_PIPELINE=OFF
 RUN cmake --build . -j $COMILE_JOBS
 RUN cmake --build . --target install -j $COMPILE_JOBS
 
