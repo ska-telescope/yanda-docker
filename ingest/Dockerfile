@@ -56,7 +56,7 @@ WORKDIR /home
 RUN git clone https://bitbucket.csiro.au/scm/askapsdp/yandasoft.git
 
 # Casacore need these, but they aren't installed by default
-WORKDIR /home/yandasoft
+WORKDIR /home/yandasoft/deploy/general
 RUN ./build_all.sh -s ubuntu -c -j $COMPILE_JOBS -C -DUSE_READLINE=OFF
 
 #############################################################
